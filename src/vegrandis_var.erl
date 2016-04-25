@@ -29,6 +29,7 @@
 -export([or_fetch/2]).                -ignore_xref({or_fetch, 2}).
 -export([xor_fetch/2]).               -ignore_xref({xor_fetch, 2}).
 
+%% @headerfile "../include/vegrandis.hrl"
 -include("vegrandis.hrl").
 -export_type([var_type/0, memory_order/0]).
 

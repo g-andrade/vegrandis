@@ -7,6 +7,7 @@
 -export([test_and_set/1]). -ignore_xref({test_and_set, 1}).
 -export([test_and_set/2]). -ignore_xref({test_and_set, 2}).
 
+%% @headerfile "../include/vegrandis.hrl"
 -include("vegrandis.hrl").
 -export_type([memory_order/0]).
 
