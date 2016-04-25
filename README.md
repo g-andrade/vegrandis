@@ -43,7 +43,7 @@ vegrandis_var:load(AtomicCounter).
 ```
 
 
-<br></br>
+---------
 
 
 ```erlang
@@ -70,7 +70,7 @@ vegrandis_var:load(AtomicCounter). % 223
 ```
 
 
-<br></br>
+---------
 
 
 ```erlang
@@ -92,7 +92,7 @@ vegrandis_var:load(AtomicCounter). % 223
 ```
 
 
-<br></br>
+---------
 
 
 ```erlang

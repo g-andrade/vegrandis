@@ -30,7 +30,7 @@ Parent = self(),
 % 10
 vegrandis_var:load(AtomicCounter).
 </pre>
-<br/>
+<hr/>
 <pre lang="erlang">
 {ok, AtomicCounter} = vegrandis_var:new(int_fast32),
 vegrandis_var:store(AtomicCounter, 123),
@@ -51,7 +51,7 @@ vegrandis_var:store(AtomicCounter, 123),
 timer:sleep(1000),
 vegrandis_var:load(AtomicCounter). % 223
 </pre>
-<br/>
+<hr/>
 <pre lang="erlang">
 {ok, AtomicFlag} = vegrandis_flag:new(),
 [spawn(
@@ -67,7 +67,7 @@ vegrandis_var:load(AtomicCounter). % 223
     end)
  || _ &lt;- lists:seq(1, 10)].
 </pre>
-<br/>
+<hr/>
 <pre lang="erlang">
 {ok, AtomicCounter} = vegrandis_var:new(long),
 vegrandis_var:is_lock_free(AtomicCounter) orelse exit(this_wont_do).
