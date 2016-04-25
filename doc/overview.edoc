@@ -8,9 +8,11 @@
 
 `vegrandis' provides native atomic variables and flags that can be shared between Erlang processes living in the same node.
 
-It wraps around C++11's <a href="http://en.cppreference.com/w/cpp/atomic/atomic">std::atomic</a> library - a majority of the standard integral data types can be used and most of the original operations can be performed, including optionally specifying <a href="http://en.cppreference.com/w/cpp/atomic/memory_order">memory ordering</a> constraints and, if the hardware allows it, operating in a <a href="http://en.cppreference.com/w/cpp/atomic/atomic_is_lock_free">lockfree</a> fashion.
+It consists of a <a href="http://erlang.org/doc/man/erl_nif.html">NIF</a> library wrapping around C++11's <a href="http://en.cppreference.com/w/cpp/atomic/atomic">std::atomic</a>; a majority of the standard integral data types can be used and most of the original operations can be performed, including optionally specifying <a href="http://en.cppreference.com/w/cpp/atomic/memory_order">memory ordering</a> constraints and, if the hardware allows it, operating in a <a href="http://en.cppreference.com/w/cpp/atomic/atomic_is_lock_free">lockfree</a> fashion.
 
 Any allocated variables will be automatically deallocated by the garbage collector once there are no more references to it.
+
+Original development rig runs OTP 17.5 over GNU/Linux x86_64, and quick test with OTP 17.5 over GNU/Linux ARM was also successful; other platforms have not been tested. Building dependencies include `make' and `g++' (but there's no reason `clang' won't work as well.)
 
 == Examples ==
 <pre lang="erlang">
@@ -71,6 +73,13 @@ vegrandis_var:load(AtomicCounter). % 223
 <pre lang="erlang">
 {ok, AtomicCounter} = vegrandis_var:new(long),
 vegrandis_var:is_lock_free(AtomicCounter) orelse exit(this_wont_do).
+</pre>
+
+== How to build ==
+The ERTS headers are required; if they're not available on a global include path, 'ERL_INCLUDE' can be explicitly defined.
+<pre lang="bash">
+% Example path
+ERL_INCLUDE=/opt/kerl/17.5/usr/include rebar compile
 </pre>
 
 == Variable types ==

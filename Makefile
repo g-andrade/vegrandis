@@ -2,9 +2,9 @@ REBAR = $(shell command -v rebar || echo ./rebar)
 DEPS_PLT=./.deps_plt
 DEPS=erts kernel stdlib
 
-.PHONY: all get-deps compile cpp_compile cpp_clean clean dialyze xref
+.PHONY: all get-deps compile clean dialyze xref
 
-all: get-deps cpp_compile compile
+all: get-deps compile
 
 get-deps:
 	@$(REBAR) get-deps
@@ -12,16 +12,10 @@ get-deps:
 compile:
 	@$(REBAR) compile
 
-cpp_compile:
-	$(MAKE) -C cpp_src
-
-cpp_clean:
-	$(MAKE) -C cpp_src clean
-
 #test: compile
 #	@ERL_AFLAGS="-config test/vegrandis_tests.app.config" $(REBAR) eunit skip_deps=true
 
-clean: cpp_clean
+clean:
 	@$(REBAR) clean
 
 $(DEPS_PLT):

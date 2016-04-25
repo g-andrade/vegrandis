@@ -14,9 +14,11 @@ __Authors:__ Guilherme Andrade ([`vegrandis(at)gandrade(dot)net`](mailto:vegrand
 
 `vegrandis` provides native atomic variables and flags that can be shared between Erlang processes living in the same node.
 
-It wraps around C++11's [std::atomic](http://en.cppreference.com/w/cpp/atomic/atomic) library - a majority of the standard integral data types can be used and most of the original operations can be performed, including optionally specifying [memory ordering](http://en.cppreference.com/w/cpp/atomic/memory_order) constraints and, if the hardware allows it, operating in a [lockfree](http://en.cppreference.com/w/cpp/atomic/atomic_is_lock_free) fashion.
+It consists of a [NIF](http://erlang.org/doc/man/erl_nif.md) library wrapping around C++11's [std::atomic](http://en.cppreference.com/w/cpp/atomic/atomic); a majority of the standard integral data types can be used and most of the original operations can be performed, including optionally specifying [memory ordering](http://en.cppreference.com/w/cpp/atomic/memory_order) constraints and, if the hardware allows it, operating in a [lockfree](http://en.cppreference.com/w/cpp/atomic/atomic_is_lock_free) fashion.
 
 Any allocated variables will be automatically deallocated by the garbage collector once there are no more references to it.
+
+Original development rig runs OTP 17.5 over GNU/Linux x86_64, and quick test with OTP 17.5 over GNU/Linux ARM was also successful; other platforms have not been tested. Building dependencies include `make` and `g++` (but there's no reason `clang` won't work as well.)
 
 
 ### <a name="Examples">Examples</a> ###
@@ -99,6 +101,18 @@ vegrandis_var:load(AtomicCounter). % 223
 
 {ok, AtomicCounter} = vegrandis_var:new(long),
 vegrandis_var:is_lock_free(AtomicCounter) orelse exit(this_wont_do).
+
+```
+
+
+### <a name="How_to_build">How to build</a> ###
+
+The ERTS headers are required; if they're not available on a global include path, 'ERL_INCLUDE' can be explicitly defined.
+
+```bash
+
+% Example path
+ERL_INCLUDE=/opt/kerl/17.5/usr/include rebar compile
 
 ```
 
