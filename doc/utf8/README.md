@@ -173,6 +173,7 @@ ERL_INCLUDE=/opt/kerl/17.5/usr/include rebar compile
 
 * Unit tests
 * Clean up C++ code / look for alternatives to the current template hell
+* Support named variables (in ETS fashion)
 
 
 ## Modules ##
