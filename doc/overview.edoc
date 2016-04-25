@@ -6,9 +6,11 @@
 
 <hr/>
 
-`vegrandis' provides native atomic variables and flags that can be shared between processes in the same node.
+`vegrandis' provides native atomic variables and flags that can be shared between Erlang processes living in the same node.
 
-It wraps around C++11's <a href="http://en.cppreference.com/w/cpp/atomic/atomic">std::atomic</a> library - all standard integral data types can be used and most of the original operations can be performed, including optionally specifying <a href="http://en.cppreference.com/w/cpp/atomic/memory_order">memory ordering</a> constraints and, if the hardware allows it, in a <a href="http://en.cppreference.com/w/cpp/atomic/atomic_is_lock_free">lockfree</a> fashion.
+It wraps around C++11's <a href="http://en.cppreference.com/w/cpp/atomic/atomic">std::atomic</a> library - a majority of the standard integral data types can be used and most of the original operations can be performed, including optionally specifying <a href="http://en.cppreference.com/w/cpp/atomic/memory_order">memory ordering</a> constraints and, if the hardware allows it, operating in a <a href="http://en.cppreference.com/w/cpp/atomic/atomic_is_lock_free">lockfree</a> fashion.
+
+Any allocated variables will be automatically deallocated by the garbage collector once there are no more references to it.
 
 == Examples ==
 <pre lang="erlang">
@@ -28,7 +30,7 @@ Parent = self(),
 % 10
 vegrandis_var:load(AtomicCounter).
 </pre>
-
+<br/>
 <pre lang="erlang">
 {ok, AtomicCounter} = vegrandis_var:new(int_fast32),
 vegrandis_var:store(AtomicCounter, 123),
@@ -49,7 +51,7 @@ vegrandis_var:store(AtomicCounter, 123),
 timer:sleep(1000),
 vegrandis_var:load(AtomicCounter). % 223
 </pre>
-
+<br/>
 <pre lang="erlang">
 {ok, AtomicFlag} = vegrandis_flag:new(),
 [spawn(
@@ -64,6 +66,11 @@ vegrandis_var:load(AtomicCounter). % 223
         end
     end)
  || _ &lt;- lists:seq(1, 10)].
+</pre>
+<br/>
+<pre lang="erlang">
+{ok, AtomicCounter} = vegrandis_var:new(long),
+vegrandis_var:is_lock_free(AtomicCounter) orelse exit(this_wont_do).
 </pre>
 
 == Variable types ==
@@ -115,3 +122,7 @@ vegrandis_var:load(AtomicCounter). % 223
 * memory_order_release
 * memory_order_acq_rel
 * memory_order_seq_cst
+
+== TODO ==
+* Unit tests
+* Clean up C++ code / look for alternatives to the current template hell

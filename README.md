@@ -12,9 +12,11 @@ __Authors:__ Guilherme Andrade ([`vegrandis(at)gandrade(dot)net`](mailto:vegrand
 
 ---------
 
-`vegrandis` provides native atomic variables and flags that can be shared between processes in the same node.
+`vegrandis` provides native atomic variables and flags that can be shared between Erlang processes living in the same node.
 
-It wraps around C++11's [std::atomic](http://en.cppreference.com/w/cpp/atomic/atomic) library - all standard integral data types can be used and most of the original operations can be performed, including optionally specifying [memory ordering](http://en.cppreference.com/w/cpp/atomic/memory_order) constraints and, if the hardware allows it, in a [lockfree](http://en.cppreference.com/w/cpp/atomic/atomic_is_lock_free) fashion.
+It wraps around C++11's [std::atomic](http://en.cppreference.com/w/cpp/atomic/atomic) library - a majority of the standard integral data types can be used and most of the original operations can be performed, including optionally specifying [memory ordering](http://en.cppreference.com/w/cpp/atomic/memory_order) constraints and, if the hardware allows it, operating in a [lockfree](http://en.cppreference.com/w/cpp/atomic/atomic_is_lock_free) fashion.
+
+Any allocated variables will be automatically deallocated by the garbage collector once there are no more references to it.
 
 
 ### <a name="Examples">Examples</a> ###
@@ -40,6 +42,10 @@ vegrandis_var:load(AtomicCounter).
 
 ```
 
+
+<br></br>
+
+
 ```erlang
 
 {ok, AtomicCounter} = vegrandis_var:new(int_fast32),
@@ -63,6 +69,10 @@ vegrandis_var:load(AtomicCounter). % 223
 
 ```
 
+
+<br></br>
+
+
 ```erlang
 
 {ok, AtomicFlag} = vegrandis_flag:new(),
@@ -78,6 +88,17 @@ vegrandis_var:load(AtomicCounter). % 223
         end
     end)
  || _ <- lists:seq(1, 10)].
+
+```
+
+
+<br></br>
+
+
+```erlang
+
+{ok, AtomicCounter} = vegrandis_var:new(long),
+vegrandis_var:is_lock_free(AtomicCounter) orelse exit(this_wont_do).
 
 ```
 
@@ -129,12 +150,19 @@ vegrandis_var:load(AtomicCounter). % 223
 
 ### <a name="Memory_orderings">Memory orderings</a> ###
 
+
 * memory_order_relaxed
 * memory_order_consume
 * memory_order_acquire
 * memory_order_release
 * memory_order_acq_rel
 * memory_order_seq_cst
+
+
+### <a name="TODO">TODO</a> ###
+
+* Unit tests
+* Clean up C++ code / look for alternatives to the current template hell
 
 
 ## Modules ##
