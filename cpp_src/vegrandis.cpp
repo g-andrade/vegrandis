@@ -67,14 +67,14 @@ static int load(ErlNifEnv* env, void** /*priv*/, ERL_NIF_TERM /*load_info*/) {
     return 0;
 }
 
-int upgrade(ErlNifEnv* /*env*/, void** /*priv_data*/, void** /*old_priv_data*/, ERL_NIF_TERM /*load_info*/) {
-    // TODO
-    return 0;
-}
+//int upgrade(ErlNifEnv* /*env*/, void** /*priv_data*/, void** /*old_priv_data*/, ERL_NIF_TERM /*load_info*/) {
+//    // TODO
+//    return 0;
+//}
 
-static void unload(ErlNifEnv* /*env*/, void* /*priv_data*/) {
-    // TODO
-}
+//static void unload(ErlNifEnv* /*env*/, void* /*priv_data*/) {
+//    // TODO
+//}
 
 /****************************************************************/
 static ERL_NIF_TERM atomic_flag_new(ErlNifEnv* env, int /*argc*/, const ERL_NIF_TERM[] /*argv*/) {
@@ -366,4 +366,5 @@ static ErlNifFunc nif_funcs[] = {
     {"atomic_var_xor_fetch", 2, atomic_var_xor_fetch, 0}
 };
 
-ERL_NIF_INIT(vegrandis_nif, nif_funcs, load, nullptr, upgrade, unload)
+//ERL_NIF_INIT(vegrandis_nif, nif_funcs, load, nullptr, upgrade, unload)
+ERL_NIF_INIT(vegrandis_nif, nif_funcs, load, nullptr, nullptr, nullptr)
