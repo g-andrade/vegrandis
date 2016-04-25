@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Module vegrandis_var</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module vegrandis_var</h1>
+<ul class="index"><li><a href="#types">Data Types</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>
+
+
+<h2><a name="types">Data Types</a></h2>
+
+<h3 class="typedecl"><a name="type-atomic_var">atomic_var()</a></h3>
+<p><tt>atomic_var() = term()</tt></p>
+
+
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#add_fetch-2">add_fetch/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#and_fetch-2">and_fetch/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#compare_exchange_strong-3">compare_exchange_strong/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#compare_exchange_strong-5">compare_exchange_strong/5</a></td><td></td></tr>
+<tr><td valign="top"><a href="#compare_exchange_weak-3">compare_exchange_weak/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#compare_exchange_weak-5">compare_exchange_weak/5</a></td><td></td></tr>
+<tr><td valign="top"><a href="#exchange-2">exchange/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#exchange-3">exchange/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#fetch_add-2">fetch_add/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#fetch_add-3">fetch_add/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#fetch_and-2">fetch_and/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#fetch_and-3">fetch_and/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#fetch_or-2">fetch_or/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#fetch_or-3">fetch_or/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#fetch_sub-2">fetch_sub/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#fetch_sub-3">fetch_sub/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#fetch_xor-2">fetch_xor/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#fetch_xor-3">fetch_xor/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#is_lock_free-1">is_lock_free/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#load-1">load/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#load-2">load/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#new-1">new/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#or_fetch-2">or_fetch/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#store-2">store/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#store-3">store/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#sub_fetch-2">sub_fetch/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#xor_fetch-2">xor_fetch/2</a></td><td></td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="add_fetch-2">add_fetch/2</a></h3>
+<div class="spec">
+<p><tt>add_fetch(Var::<a href="#type-atomic_var">atomic_var()</a>, Arg::integer()) -&gt; integer()</tt><br></p>
+</div>
+
+<h3 class="function"><a name="and_fetch-2">and_fetch/2</a></h3>
+<div class="spec">
+<p><tt>and_fetch(Var::<a href="#type-atomic_var">atomic_var()</a>, Arg::integer()) -&gt; integer()</tt><br></p>
+</div>
+
+<h3 class="function"><a name="compare_exchange_strong-3">compare_exchange_strong/3</a></h3>
+<div class="spec">
+<p><tt>compare_exchange_strong(Var::<a href="#type-atomic_var">atomic_var()</a>, Expected::integer(), Desired::integer()) -&gt; true | {false, integer()}</tt><br></p>
+</div>
+
+<h3 class="function"><a name="compare_exchange_strong-5">compare_exchange_strong/5</a></h3>
+<div class="spec">
+<p><tt>compare_exchange_strong(Var::<a href="#type-atomic_var">atomic_var()</a>, Expected::integer(), Desired::integer(), SuccMemoryOrder::<a href="#type-memory_order">memory_order()</a>, FailMemoryOrder::<a href="#type-memory_order">memory_order()</a>) -&gt; true | {false, integer()}</tt><br></p>
+</div>
+
+<h3 class="function"><a name="compare_exchange_weak-3">compare_exchange_weak/3</a></h3>
+<div class="spec">
+<p><tt>compare_exchange_weak(Var::<a href="#type-atomic_var">atomic_var()</a>, Expected::integer(), Desired::integer()) -&gt; true | {false, integer()}</tt><br></p>
+</div>
+
+<h3 class="function"><a name="compare_exchange_weak-5">compare_exchange_weak/5</a></h3>
+<div class="spec">
+<p><tt>compare_exchange_weak(Var::<a href="#type-atomic_var">atomic_var()</a>, Expected::integer(), Desired::integer(), SuccMemoryOrder::<a href="#type-memory_order">memory_order()</a>, FailMemoryOrder::<a href="#type-memory_order">memory_order()</a>) -&gt; true | {false, integer()}</tt><br></p>
+</div>
+
+<h3 class="function"><a name="exchange-2">exchange/2</a></h3>
+<div class="spec">
+<p><tt>exchange(Var::<a href="#type-atomic_var">atomic_var()</a>, Value::integer()) -&gt; integer()</tt><br></p>
+</div>
+
+<h3 class="function"><a name="exchange-3">exchange/3</a></h3>
+<div class="spec">
+<p><tt>exchange(Var::<a href="#type-atomic_var">atomic_var()</a>, Value::integer(), MemoryOrder::<a href="#type-memory_order">memory_order()</a>) -&gt; integer()</tt><br></p>
+</div>
+
+<h3 class="function"><a name="fetch_add-2">fetch_add/2</a></h3>
+<div class="spec">
+<p><tt>fetch_add(Var::<a href="#type-atomic_var">atomic_var()</a>, Arg::integer()) -&gt; integer()</tt><br></p>
+</div>
+
+<h3 class="function"><a name="fetch_add-3">fetch_add/3</a></h3>
+<div class="spec">
+<p><tt>fetch_add(Var::<a href="#type-atomic_var">atomic_var()</a>, Arg::integer(), MemoryOrder::<a href="#type-memory_order">memory_order()</a>) -&gt; integer()</tt><br></p>
+</div>
+
+<h3 class="function"><a name="fetch_and-2">fetch_and/2</a></h3>
+<div class="spec">
+<p><tt>fetch_and(Var::<a href="#type-atomic_var">atomic_var()</a>, Arg::integer()) -&gt; integer()</tt><br></p>
+</div>
+
+<h3 class="function"><a name="fetch_and-3">fetch_and/3</a></h3>
+<div class="spec">
+<p><tt>fetch_and(Var::<a href="#type-atomic_var">atomic_var()</a>, Arg::integer(), MemoryOrder::<a href="#type-memory_order">memory_order()</a>) -&gt; integer()</tt><br></p>
+</div>
+
+<h3 class="function"><a name="fetch_or-2">fetch_or/2</a></h3>
+<div class="spec">
+<p><tt>fetch_or(Var::<a href="#type-atomic_var">atomic_var()</a>, Arg::integer()) -&gt; integer()</tt><br></p>
+</div>
+
+<h3 class="function"><a name="fetch_or-3">fetch_or/3</a></h3>
+<div class="spec">
+<p><tt>fetch_or(Var::<a href="#type-atomic_var">atomic_var()</a>, Arg::integer(), MemoryOrder::<a href="#type-memory_order">memory_order()</a>) -&gt; integer()</tt><br></p>
+</div>
+
+<h3 class="function"><a name="fetch_sub-2">fetch_sub/2</a></h3>
+<div class="spec">
+<p><tt>fetch_sub(Var::<a href="#type-atomic_var">atomic_var()</a>, Arg::integer()) -&gt; integer()</tt><br></p>
+</div>
+
+<h3 class="function"><a name="fetch_sub-3">fetch_sub/3</a></h3>
+<div class="spec">
+<p><tt>fetch_sub(Var::<a href="#type-atomic_var">atomic_var()</a>, Arg::integer(), MemoryOrder::<a href="#type-memory_order">memory_order()</a>) -&gt; integer()</tt><br></p>
+</div>
+
+<h3 class="function"><a name="fetch_xor-2">fetch_xor/2</a></h3>
+<div class="spec">
+<p><tt>fetch_xor(Var::<a href="#type-atomic_var">atomic_var()</a>, Arg::integer()) -&gt; integer()</tt><br></p>
+</div>
+
+<h3 class="function"><a name="fetch_xor-3">fetch_xor/3</a></h3>
+<div class="spec">
+<p><tt>fetch_xor(Var::<a href="#type-atomic_var">atomic_var()</a>, Arg::integer(), MemoryOrder::<a href="#type-memory_order">memory_order()</a>) -&gt; integer()</tt><br></p>
+</div>
+
+<h3 class="function"><a name="is_lock_free-1">is_lock_free/1</a></h3>
+<div class="spec">
+<p><tt>is_lock_free(Var::<a href="#type-atomic_var">atomic_var()</a>) -&gt; boolean()</tt><br></p>
+</div>
+
+<h3 class="function"><a name="load-1">load/1</a></h3>
+<div class="spec">
+<p><tt>load(Var::<a href="#type-atomic_var">atomic_var()</a>) -&gt; integer()</tt><br></p>
+</div>
+
+<h3 class="function"><a name="load-2">load/2</a></h3>
+<div class="spec">
+<p><tt>load(Var::<a href="#type-atomic_var">atomic_var()</a>, MemoryOrder::<a href="#type-memory_order">memory_order()</a>) -&gt; integer()</tt><br></p>
+</div>
+
+<h3 class="function"><a name="new-1">new/1</a></h3>
+<div class="spec">
+<p><tt>new(Type::<a href="#type-var_type">var_type()</a>) -&gt; {ok, <a href="#type-atomic_var">atomic_var()</a>} | {error, out_of_memory}</tt><br></p>
+</div>
+
+<h3 class="function"><a name="or_fetch-2">or_fetch/2</a></h3>
+<div class="spec">
+<p><tt>or_fetch(Var::<a href="#type-atomic_var">atomic_var()</a>, Arg::integer()) -&gt; integer()</tt><br></p>
+</div>
+
+<h3 class="function"><a name="store-2">store/2</a></h3>
+<div class="spec">
+<p><tt>store(Var::<a href="#type-atomic_var">atomic_var()</a>, Value::integer()) -&gt; ok</tt><br></p>
+</div>
+
+<h3 class="function"><a name="store-3">store/3</a></h3>
+<div class="spec">
+<p><tt>store(Var::<a href="#type-atomic_var">atomic_var()</a>, Value::integer(), MemoryOrder::<a href="#type-memory_order">memory_order()</a>) -&gt; ok</tt><br></p>
+</div>
+
+<h3 class="function"><a name="sub_fetch-2">sub_fetch/2</a></h3>
+<div class="spec">
+<p><tt>sub_fetch(Var::<a href="#type-atomic_var">atomic_var()</a>, Arg::integer()) -&gt; integer()</tt><br></p>
+</div>
+
+<h3 class="function"><a name="xor_fetch-2">xor_fetch/2</a></h3>
+<div class="spec">
+<p><tt>xor_fetch(Var::<a href="#type-atomic_var">atomic_var()</a>, Arg::integer()) -&gt; integer()</tt><br></p>
+</div>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc, Apr 25 2016, 18:56:06.</i></p>
+</body>
+</html>
