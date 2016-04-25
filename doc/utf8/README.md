@@ -13,7 +13,7 @@ __Authors:__ Guilherme Andrade ([`vegrandis(at)gandrade(dot)net`](mailto:vegrand
 
 `vegrandis` provides native atomic variables and flags that can be shared between Erlang processes living in the same node.
 
-It consists of a [NIF](http://erlang.org/doc/man/erl_nif.md) library wrapping around C++11's [std::atomic](http://en.cppreference.com/w/cpp/atomic/atomic); a majority of the standard integral data types can be used and most of the original operations can be performed, including optionally specifying [memory ordering](http://en.cppreference.com/w/cpp/atomic/memory_order) constraints and, if the hardware allows it, operating in a [lockfree](http://en.cppreference.com/w/cpp/atomic/atomic_is_lock_free) fashion.
+It consists of a [NIF](http://erlang.org/doc/man/erl_nif.md) library wrapping around C++11's [std::atomic](http://en.cppreference.com/w/cpp/atomic/atomic); a majority of the standard integral data types can be used and most of the original operations can be performed, including optionally specifying [memory ordering](http://en.cppreference.com/w/cpp/atomic/memory_order) constraints and, if both hardware and compiler implementation allow it, operating in a [lockfree](http://en.cppreference.com/w/cpp/atomic/atomic_is_lock_free) fashion.
 
 Any allocated variables will be automatically deallocated by the garbage collector once there are no more references to it.
 
