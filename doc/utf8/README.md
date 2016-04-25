@@ -101,7 +101,7 @@ vegrandis_var:is_lock_free(AtomicCounter) orelse exit(this_wont_do).
 ```
 
 
-### <a name="How_to_build">How to build</a> ###
+### <a name="Building">Building</a> ###
 
 The ERTS headers are required; if they're not available on a global include path, 'ERL_INCLUDE' can be explicitly defined.
 
@@ -111,6 +111,9 @@ The ERTS headers are required; if they're not available on a global include path
 ERL_INCLUDE=/opt/kerl/17.5/usr/include rebar compile
 
 ```
+
+
+The NIF shared object will be dumped into the priv/ directory.
 
 
 ### <a name="Variable_types">Variable types</a> ###
