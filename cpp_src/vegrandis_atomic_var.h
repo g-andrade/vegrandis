@@ -24,6 +24,7 @@
 
    */
 
+#include "vegrandis_erlang_term.h"
 #include "erl_nif.h"
 #include <atomic>
 
@@ -87,13 +88,73 @@ class AtomicVariable {
 
 
 template<typename T>
-class SpecializedAtomicVariable : public AtomicVariable {
+class NativeAtomicVariable : public AtomicVariable {
     private:
-        std::atomic<T> var;
+        std::atomic<T> var_;
 
     public:
-        SpecializedAtomicVariable(): var(0) {};
-        ~SpecializedAtomicVariable() {}
+        NativeAtomicVariable(): var_(0) {};
+        ~NativeAtomicVariable() {};
+
+        ERL_NIF_TERM is_lock_free(ErlNifEnv* env);
+
+        ERL_NIF_TERM store(ErlNifEnv* env, ERL_NIF_TERM value_term);
+        ERL_NIF_TERM store(
+                ErlNifEnv* env, ERL_NIF_TERM value_term, ERL_NIF_TERM memory_order_term
+                );
+
+        ERL_NIF_TERM load(ErlNifEnv* env);
+        ERL_NIF_TERM load(ErlNifEnv* env, ERL_NIF_TERM memory_order_term);
+
+        ERL_NIF_TERM exchange(ErlNifEnv* env, ERL_NIF_TERM desired_term);
+        ERL_NIF_TERM exchange(
+                ErlNifEnv* env, ERL_NIF_TERM desired_term, ERL_NIF_TERM memory_order_term
+                );
+
+        ERL_NIF_TERM compare_exchange_weak(
+                ErlNifEnv* env, ERL_NIF_TERM expected_term, ERL_NIF_TERM desired_term
+                );
+        ERL_NIF_TERM compare_exchange_weak(
+                ErlNifEnv* env, ERL_NIF_TERM expected_term, ERL_NIF_TERM desired_term,
+                ERL_NIF_TERM succ_memory_order_term, ERL_NIF_TERM fail_memory_order_term);
+
+        ERL_NIF_TERM compare_exchange_strong(
+                ErlNifEnv* env, ERL_NIF_TERM expected_term, ERL_NIF_TERM desired_term
+                );
+        ERL_NIF_TERM compare_exchange_strong(
+                ErlNifEnv* env, ERL_NIF_TERM expected_term, ERL_NIF_TERM desired_term,
+                ERL_NIF_TERM succ_memory_order_term, ERL_NIF_TERM fail_memory_order_term);
+
+        ERL_NIF_TERM fetch_add(ErlNifEnv* env, ERL_NIF_TERM arg_term);
+        ERL_NIF_TERM fetch_add(ErlNifEnv* env, ERL_NIF_TERM arg_term, ERL_NIF_TERM memory_order_term);
+
+        ERL_NIF_TERM fetch_sub(ErlNifEnv* env, ERL_NIF_TERM arg_term);
+        ERL_NIF_TERM fetch_sub(ErlNifEnv* env, ERL_NIF_TERM arg_term, ERL_NIF_TERM memory_order_term);
+
+        ERL_NIF_TERM fetch_and(ErlNifEnv* env, ERL_NIF_TERM arg_term);
+        ERL_NIF_TERM fetch_and(ErlNifEnv* env, ERL_NIF_TERM arg_term, ERL_NIF_TERM memory_order_term);
+
+        ERL_NIF_TERM fetch_or(ErlNifEnv* env, ERL_NIF_TERM arg_term);
+        ERL_NIF_TERM fetch_or(ErlNifEnv* env, ERL_NIF_TERM arg_term, ERL_NIF_TERM memory_order_term);
+
+        ERL_NIF_TERM fetch_xor(ErlNifEnv* env, ERL_NIF_TERM arg_term);
+        ERL_NIF_TERM fetch_xor(ErlNifEnv* env, ERL_NIF_TERM arg_term, ERL_NIF_TERM memory_order_term);
+
+        ERL_NIF_TERM add_fetch(ErlNifEnv* env, ERL_NIF_TERM arg_term);
+        ERL_NIF_TERM sub_fetch(ErlNifEnv* env, ERL_NIF_TERM arg_term);
+        ERL_NIF_TERM and_fetch(ErlNifEnv* env, ERL_NIF_TERM arg_term);
+        ERL_NIF_TERM or_fetch(ErlNifEnv* env, ERL_NIF_TERM arg_term);
+        ERL_NIF_TERM xor_fetch(ErlNifEnv* env, ERL_NIF_TERM arg_term);
+};
+
+class ErlangAtomicVariable : public AtomicVariable {
+    private:
+        std::atomic<ErlangTerm*> var_;
+
+    public:
+        ErlangAtomicVariable();
+        ErlangAtomicVariable(ERL_NIF_TERM value);
+        ~ErlangAtomicVariable();
 
         ERL_NIF_TERM is_lock_free(ErlNifEnv* env);
 
@@ -147,3 +208,5 @@ class SpecializedAtomicVariable : public AtomicVariable {
 };
 
 extern AtomicVariable* new_atomic_variable(const char* type_str);
+extern AtomicVariable* new_native_atomic_variable(const char* type_str);
+extern AtomicVariable* new_erlang_atomic_variable();

@@ -40,7 +40,9 @@
         int32 |
         uint32 |
         int64 |
-        uint64).
+        uint64 |
+        % any Erlang term
+        term).
 
 -type memory_order() :: (memory_order_relaxed |
                          memory_order_consume |

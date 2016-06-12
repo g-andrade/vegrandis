@@ -1,4 +1,4 @@
 %% encoding: UTF-8
 {application,vegrandis}.
 {packages,[]}.
-{modules,[vegrandis_flag,vegrandis_var]}.
+{modules,[vegrandis,vegrandis_flag]}.

@@ -6,7 +6,7 @@ LDFLAGS=-fPIC
 LDLIBS=
 SHARED_OBJECT=../priv/vegrandis_nif.so
 
-SRCS=vegrandis_atomic_var.cpp vegrandis_common.cpp vegrandis.cpp
+SRCS=vegrandis_native_var.cpp vegrandis_erlang_var.cpp vegrandis_atomic_var.cpp vegrandis_common.cpp vegrandis.cpp
 OBJS=$(subst .cpp,.o,$(SRCS))
 
 .PHONY: all clean

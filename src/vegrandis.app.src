@@ -1,11 +1,11 @@
 {application, vegrandis,
  [
-  {description, "Native atomic shared variables for Erlang"},
+  {description, "Atomic shared variables for Erlang"},
   {vsn, git},
   {modules, [
              vegrandis_nif,
              vegrandis_flag,
-             vegrandis_var
+             vegrandis
             ]},
   {registered, []},
   {applications, [
