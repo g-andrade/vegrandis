@@ -48,7 +48,7 @@ init() ->
     ok = erlang:load_nif(NifPath, 0).
 
 
--spec atomic_flag_new() -> {ok, vegrandis_flag:atomic_flag()} | {error, out_of_memory}.
+-spec atomic_flag_new() -> vegrandis_flag:atomic_flag().
 atomic_flag_new() ->
     erlang:nif_error(nif_library_not_loaded).
 
@@ -71,7 +71,7 @@ atomic_flag_test_and_set(_Flag, _Memory_Order) ->
     erlang:nif_error(nif_library_not_loaded).
 
 
--spec atomic_var_new(_Type :: vegrandis:var_type()) -> {ok, vegrandis:atomic_var()} | {error, out_of_memory}.
+-spec atomic_var_new(_Type :: vegrandis:var_type()) -> vegrandis:atomic_var().
 atomic_var_new(_Type) ->
     erlang:nif_error(nif_library_not_loaded).
 

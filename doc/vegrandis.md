@@ -17,11 +17,7 @@
 ### <a name="type-atomic_var">atomic_var()</a> ###
 
 
-
-<pre><code>
-atomic_var() = term()
-</code></pre>
-
+__abstract datatype__: `atomic_var()`
 
 
 
@@ -52,7 +48,7 @@ var_type() = (char | schar | uchar | short | ushort | int | uint | long | ulong 
 ## Function Index ##
 
 
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#add_fetch-2">add_fetch/2</a></td><td></td></tr><tr><td valign="top"><a href="#and_fetch-2">and_fetch/2</a></td><td></td></tr><tr><td valign="top"><a href="#compare_exchange_strong-3">compare_exchange_strong/3</a></td><td></td></tr><tr><td valign="top"><a href="#compare_exchange_strong-5">compare_exchange_strong/5</a></td><td></td></tr><tr><td valign="top"><a href="#compare_exchange_weak-3">compare_exchange_weak/3</a></td><td></td></tr><tr><td valign="top"><a href="#compare_exchange_weak-5">compare_exchange_weak/5</a></td><td></td></tr><tr><td valign="top"><a href="#exchange-2">exchange/2</a></td><td></td></tr><tr><td valign="top"><a href="#exchange-3">exchange/3</a></td><td></td></tr><tr><td valign="top"><a href="#fetch_add-2">fetch_add/2</a></td><td></td></tr><tr><td valign="top"><a href="#fetch_add-3">fetch_add/3</a></td><td></td></tr><tr><td valign="top"><a href="#fetch_and-2">fetch_and/2</a></td><td></td></tr><tr><td valign="top"><a href="#fetch_and-3">fetch_and/3</a></td><td></td></tr><tr><td valign="top"><a href="#fetch_or-2">fetch_or/2</a></td><td></td></tr><tr><td valign="top"><a href="#fetch_or-3">fetch_or/3</a></td><td></td></tr><tr><td valign="top"><a href="#fetch_sub-2">fetch_sub/2</a></td><td></td></tr><tr><td valign="top"><a href="#fetch_sub-3">fetch_sub/3</a></td><td></td></tr><tr><td valign="top"><a href="#fetch_xor-2">fetch_xor/2</a></td><td></td></tr><tr><td valign="top"><a href="#fetch_xor-3">fetch_xor/3</a></td><td></td></tr><tr><td valign="top"><a href="#is_lock_free-1">is_lock_free/1</a></td><td></td></tr><tr><td valign="top"><a href="#load-1">load/1</a></td><td></td></tr><tr><td valign="top"><a href="#load-2">load/2</a></td><td></td></tr><tr><td valign="top"><a href="#new-1">new/1</a></td><td></td></tr><tr><td valign="top"><a href="#or_fetch-2">or_fetch/2</a></td><td></td></tr><tr><td valign="top"><a href="#store-2">store/2</a></td><td></td></tr><tr><td valign="top"><a href="#store-3">store/3</a></td><td></td></tr><tr><td valign="top"><a href="#sub_fetch-2">sub_fetch/2</a></td><td></td></tr><tr><td valign="top"><a href="#xor_fetch-2">xor_fetch/2</a></td><td></td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#add_fetch-2">add_fetch/2</a></td><td></td></tr><tr><td valign="top"><a href="#and_fetch-2">and_fetch/2</a></td><td></td></tr><tr><td valign="top"><a href="#compare_exchange_strong-3">compare_exchange_strong/3</a></td><td></td></tr><tr><td valign="top"><a href="#compare_exchange_strong-5">compare_exchange_strong/5</a></td><td></td></tr><tr><td valign="top"><a href="#compare_exchange_weak-3">compare_exchange_weak/3</a></td><td></td></tr><tr><td valign="top"><a href="#compare_exchange_weak-5">compare_exchange_weak/5</a></td><td></td></tr><tr><td valign="top"><a href="#exchange-2">exchange/2</a></td><td></td></tr><tr><td valign="top"><a href="#exchange-3">exchange/3</a></td><td></td></tr><tr><td valign="top"><a href="#fetch_add-2">fetch_add/2</a></td><td></td></tr><tr><td valign="top"><a href="#fetch_add-3">fetch_add/3</a></td><td></td></tr><tr><td valign="top"><a href="#fetch_and-2">fetch_and/2</a></td><td></td></tr><tr><td valign="top"><a href="#fetch_and-3">fetch_and/3</a></td><td></td></tr><tr><td valign="top"><a href="#fetch_or-2">fetch_or/2</a></td><td></td></tr><tr><td valign="top"><a href="#fetch_or-3">fetch_or/3</a></td><td></td></tr><tr><td valign="top"><a href="#fetch_sub-2">fetch_sub/2</a></td><td></td></tr><tr><td valign="top"><a href="#fetch_sub-3">fetch_sub/3</a></td><td></td></tr><tr><td valign="top"><a href="#fetch_xor-2">fetch_xor/2</a></td><td></td></tr><tr><td valign="top"><a href="#fetch_xor-3">fetch_xor/3</a></td><td></td></tr><tr><td valign="top"><a href="#is_lock_free-1">is_lock_free/1</a></td><td></td></tr><tr><td valign="top"><a href="#load-1">load/1</a></td><td></td></tr><tr><td valign="top"><a href="#load-2">load/2</a></td><td></td></tr><tr><td valign="top"><a href="#new-0">new/0</a></td><td></td></tr><tr><td valign="top"><a href="#new-1">new/1</a></td><td></td></tr><tr><td valign="top"><a href="#or_fetch-2">or_fetch/2</a></td><td></td></tr><tr><td valign="top"><a href="#store-2">store/2</a></td><td></td></tr><tr><td valign="top"><a href="#store-3">store/3</a></td><td></td></tr><tr><td valign="top"><a href="#sub_fetch-2">sub_fetch/2</a></td><td></td></tr><tr><td valign="top"><a href="#xor_fetch-2">xor_fetch/2</a></td><td></td></tr></table>
 
 
 <a name="functions"></a>
@@ -332,13 +328,26 @@ load(Var::<a href="#type-atomic_var">atomic_var()</a>, MemoryOrder::<a href="#ty
 
 
 
+<a name="new-0"></a>
+
+### new/0 ###
+
+
+<pre><code>
+new() -&gt; <a href="#type-atomic_var">atomic_var()</a>
+</code></pre>
+
+<br></br>
+
+
+
 <a name="new-1"></a>
 
 ### new/1 ###
 
 
 <pre><code>
-new(Type::<a href="#type-var_type">var_type()</a>) -&gt; {ok, <a href="#type-atomic_var">atomic_var()</a>} | {error, out_of_memory}
+new(Type::<a href="#type-var_type">var_type()</a>) -&gt; <a href="#type-atomic_var">atomic_var()</a>
 </code></pre>
 
 <br></br>

@@ -4,7 +4,7 @@
 
 Copyright (c) 2016 Guilherme Andrade
 
-__Version:__ 2.0.1
+__Version:__ 3.0.0
 
 __Authors:__ Guilherme Andrade ([`vegrandis(at)gandrade(dot)net`](mailto:vegrandis(at)gandrade(dot)net)).
 
@@ -26,7 +26,7 @@ Original development rig runs OTP 17.5 over GNU/Linux x86_64, and quick test wit
 
 ```erlang
 
-{ok, SharedTerm} = vegrandis:new(term),
+SharedTerm = vegrandis:new(),
 vegrandis:store(SharedTerm, math:pi()),
 spawn(fun () ->
           io:format("stored value: ~p~n", [vegrandis:load(SharedTerm)])
@@ -37,7 +37,7 @@ spawn(fun () ->
 
 ```erlang
 
-{ok, AtomicCounter} = vegrandis:new(uint8),
+AtomicCounter = vegrandis:new(uint8),
 Increments = 10,
 Parent = self(),
 
@@ -61,7 +61,7 @@ vegrandis:load(AtomicCounter).
 
 ```erlang
 
-{ok, AtomicCounter} = vegrandis:new(int_fast32),
+AtomicCounter = vegrandis:new(int_fast32),
 vegrandis:store(AtomicCounter, 123),
 [spawn(
     fun F() ->
@@ -88,7 +88,7 @@ vegrandis:load(AtomicCounter). % 223
 
 ```erlang
 
-{ok, AtomicFlag} = vegrandis_flag:new(),
+AtomicFlag = vegrandis_flag:new(),
 [spawn(
     fun F() ->
         case vegrandis_flag:test_and_set(AtomicFlag) of
@@ -110,7 +110,7 @@ vegrandis:load(AtomicCounter). % 223
 
 ```erlang
 
-{ok, AtomicCounter} = vegrandis:new(long),
+AtomicCounter = vegrandis:new(long),
 vegrandis:is_lock_free(AtomicCounter) orelse exit(this_wont_do).
 
 ```

@@ -11,11 +11,13 @@
 -include("vegrandis.hrl").
 -export_type([memory_order/0]).
 
--type atomic_flag() :: term().
+-type wrapped_resource(Id) :: {Id, non_neg_integer(), term()}.
+
+-opaque atomic_flag() :: wrapped_resource('vegrandis.atomic_flag').
 -export_type([atomic_flag/0]).
 
 
--spec new() -> {ok, atomic_flag()} | {error, out_of_memory}.
+-spec new() -> atomic_flag().
 new() ->
     vegrandis_nif:atomic_flag_new().
 
