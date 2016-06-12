@@ -17,11 +17,7 @@
 ### <a name="type-atomic_var">atomic_var()</a> ###
 
 
-
-<pre><code>
-atomic_var() = term()
-</code></pre>
-
+__abstract datatype__: `atomic_var()`
 
 
 
