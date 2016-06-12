@@ -1,4 +1,4 @@
--module(vegrandis_var).
+-module(vegrandis).
 -author('Guilherme Andrade <vegrandis(at)gandrade(dot)net>').
 
 -export([new/1]).                     -ignore_xref({new, 1}).
@@ -44,27 +44,27 @@ new(Type) ->
 is_lock_free(Var) ->
     vegrandis_nif:atomic_var_is_lock_free(Var).
 
--spec store(Var :: atomic_var(), Value :: integer()) -> ok.
+-spec store(Var :: atomic_var(), Value :: term()) -> ok.
 store(Var, Value) ->
     vegrandis_nif:atomic_var_store(Var, Value).
 
--spec store(Var :: atomic_var(), Value :: integer(), MemoryOrder :: memory_order()) -> ok.
+-spec store(Var :: atomic_var(), Value :: term(), MemoryOrder :: memory_order()) -> ok.
 store(Var, Value, MemoryOrder) ->
     vegrandis_nif:atomic_var_store(Var, Value, MemoryOrder).
 
--spec load(Var :: atomic_var()) -> integer().
+-spec load(Var :: atomic_var()) -> term().
 load(Var) ->
     vegrandis_nif:atomic_var_load(Var).
 
--spec load(Var :: atomic_var(), MemoryOrder :: memory_order()) -> integer().
+-spec load(Var :: atomic_var(), MemoryOrder :: memory_order()) -> term().
 load(Var, MemoryOrder) ->
     vegrandis_nif:atomic_var_load(Var, MemoryOrder).
 
--spec exchange(Var :: atomic_var(), Value :: integer()) -> integer().
+-spec exchange(Var :: atomic_var(), Value :: term()) -> term().
 exchange(Var, Value) ->
     vegrandis_nif:atomic_var_exchange(Var, Value).
 
--spec exchange(Var :: atomic_var(), Value :: integer(), MemoryOrder :: memory_order()) -> integer().
+-spec exchange(Var :: atomic_var(), Value :: term(), MemoryOrder :: memory_order()) -> term().
 exchange(Var, Value, MemoryOrder) ->
     vegrandis_nif:atomic_var_exchange(Var, Value, MemoryOrder).
 

@@ -1,12 +1,12 @@
 @author Guilherme Andrade <vegrandis(at)gandrade(dot)net>
 @copyright 2016 Guilherme Andrade
-@version 1.0.0
+@version 2.0.0
 @title vegrandis
-@doc `vegrandis': Native atomic shared variables for Erlang
+@doc `vegrandis': Atomic shared variables for Erlang
 
 <hr/>
 
-`vegrandis' provides native atomic variables and flags that can be shared between Erlang processes living in the same node.
+`vegrandis' provides atomic variables - for both native integral types and Erlang terms - and native flags that can be shared between Erlang processes living in the same node.
 
 It consists of a <a href="http://erlang.org/doc/man/erl_nif.html">NIF</a> library wrapping around C++11's <a href="http://en.cppreference.com/w/cpp/atomic/atomic">std::atomic</a>; a majority of the standard integral data types can be used and most of the original operations can be performed, including optionally specifying <a href="http://en.cppreference.com/w/cpp/atomic/memory_order">memory ordering</a> constraints and, if both hardware and compiler implementation allow it, operating in a <a href="http://en.cppreference.com/w/cpp/atomic/atomic_is_lock_free">lockfree</a> fashion.
 
@@ -16,13 +16,22 @@ Original development rig runs OTP 17.5 over GNU/Linux x86_64, and quick test wit
 
 == Examples ==
 <pre lang="erlang">
-{ok, AtomicCounter} = vegrandis_var:new(uint8),
+{ok, SharedTerm} = vegrandis:new(term),
+vegrandis:store(SharedTerm, math:pi()),
+spawn(fun () -&gt;
+          io:format("stored value: ~p~n", [vegrandis:load(SharedTerm)])
+      end).
+% stored value: 3.141592653589793
+</pre>
+
+<pre lang="erlang">
+{ok, AtomicCounter} = vegrandis:new(uint8),
 Increments = 10,
 Parent = self(),
 
 [spawn(
     fun () -&gt;
-        Parent ! vegrandis_var:fetch_add(AtomicCounter, 1)
+        Parent ! vegrandis:fetch_add(AtomicCounter, 1)
     end)
  || _ &lt;- lists:seq(1, Increments)],
 
@@ -30,16 +39,16 @@ Parent = self(),
 [receive Value -&gt; Value end || _ &lt;- lists:seq(1, Increments)],
 
 % 10
-vegrandis_var:load(AtomicCounter).
+vegrandis:load(AtomicCounter).
 </pre>
 <hr/>
 <pre lang="erlang">
-{ok, AtomicCounter} = vegrandis_var:new(int_fast32),
-vegrandis_var:store(AtomicCounter, 123),
+{ok, AtomicCounter} = vegrandis:new(int_fast32),
+vegrandis:store(AtomicCounter, 123),
 [spawn(
     fun F() -&gt;
-        Value = vegrandis_var:load(AtomicCounter, memory_order_relaxed),
-        case vegrandis_var:compare_exchange_weak(AtomicCounter,
+        Value = vegrandis:load(AtomicCounter, memory_order_relaxed),
+        case vegrandis:compare_exchange_weak(AtomicCounter,
                 Value, Value + 1, memory_order_release, memory_order_relaxed)
         of
             true -&gt;
@@ -51,7 +60,7 @@ vegrandis_var:store(AtomicCounter, 123),
  || _ &lt;- lists:seq(1, 100)],
 
 timer:sleep(1000),
-vegrandis_var:load(AtomicCounter). % 223
+vegrandis:load(AtomicCounter). % 223
 </pre>
 <hr/>
 <pre lang="erlang">
@@ -71,8 +80,8 @@ vegrandis_var:load(AtomicCounter). % 223
 </pre>
 <hr/>
 <pre lang="erlang">
-{ok, AtomicCounter} = vegrandis_var:new(long),
-vegrandis_var:is_lock_free(AtomicCounter) orelse exit(this_wont_do).
+{ok, AtomicCounter} = vegrandis:new(long),
+vegrandis:is_lock_free(AtomicCounter) orelse exit(this_wont_do).
 </pre>
 
 == Building ==
@@ -84,6 +93,7 @@ ERL_INCLUDE=/opt/kerl/17.5/usr/include rebar compile
 The NIF shared object will be dumped into the priv/ directory.
 
 == Variable types ==
+* term (any Erlang term)
 * int8
 * uint8
 * int16

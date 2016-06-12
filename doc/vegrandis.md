@@ -1,6 +1,6 @@
 
 
-# Module vegrandis_var #
+# Module vegrandis #
 * [Data Types](#types)
 * [Function Index](#index)
 * [Function Details](#functions)
@@ -43,7 +43,7 @@ memory_order() = (memory_order_relaxed | memory_order_consume | memory_order_acq
 
 
 <pre><code>
-var_type() = (char | schar | uchar | short | ushort | int | uint | long | ulong | llong | ullong | char16 | char32 | wchar | int_least8 | uint_least8 | int_least16 | uint_least16 | int_least32 | uint_least32 | int_least64 | uint_least64 | int_fast8 | uint_fast8 | int_fast16 | uint_fast16 | int_fast32 | uint_fast32 | int_fast64 | uint_fast64 | intmax | uintmax | int8 | uint8 | int16 | uint16 | int32 | uint32 | int64 | uint64)
+var_type() = (char | schar | uchar | short | ushort | int | uint | long | ulong | llong | ullong | char16 | char32 | wchar | int_least8 | uint_least8 | int_least16 | uint_least16 | int_least32 | uint_least32 | int_least64 | uint_least64 | int_fast8 | uint_fast8 | int_fast16 | uint_fast16 | int_fast32 | uint_fast32 | int_fast64 | uint_fast64 | intmax | uintmax | int8 | uint8 | int16 | uint16 | int32 | uint32 | int64 | uint64 | term)
 </code></pre>
 
 
@@ -143,7 +143,7 @@ compare_exchange_weak(Var::<a href="#type-atomic_var">atomic_var()</a>, Expected
 
 
 <pre><code>
-exchange(Var::<a href="#type-atomic_var">atomic_var()</a>, Value::integer()) -&gt; integer()
+exchange(Var::<a href="#type-atomic_var">atomic_var()</a>, Value::term()) -&gt; term()
 </code></pre>
 
 <br></br>
@@ -156,7 +156,7 @@ exchange(Var::<a href="#type-atomic_var">atomic_var()</a>, Value::integer()) -&g
 
 
 <pre><code>
-exchange(Var::<a href="#type-atomic_var">atomic_var()</a>, Value::integer(), MemoryOrder::<a href="#type-memory_order">memory_order()</a>) -&gt; integer()
+exchange(Var::<a href="#type-atomic_var">atomic_var()</a>, Value::term(), MemoryOrder::<a href="#type-memory_order">memory_order()</a>) -&gt; term()
 </code></pre>
 
 <br></br>
@@ -312,7 +312,7 @@ is_lock_free(Var::<a href="#type-atomic_var">atomic_var()</a>) -&gt; boolean()
 
 
 <pre><code>
-load(Var::<a href="#type-atomic_var">atomic_var()</a>) -&gt; integer()
+load(Var::<a href="#type-atomic_var">atomic_var()</a>) -&gt; term()
 </code></pre>
 
 <br></br>
@@ -325,7 +325,7 @@ load(Var::<a href="#type-atomic_var">atomic_var()</a>) -&gt; integer()
 
 
 <pre><code>
-load(Var::<a href="#type-atomic_var">atomic_var()</a>, MemoryOrder::<a href="#type-memory_order">memory_order()</a>) -&gt; integer()
+load(Var::<a href="#type-atomic_var">atomic_var()</a>, MemoryOrder::<a href="#type-memory_order">memory_order()</a>) -&gt; term()
 </code></pre>
 
 <br></br>
@@ -364,7 +364,7 @@ or_fetch(Var::<a href="#type-atomic_var">atomic_var()</a>, Arg::integer()) -&gt;
 
 
 <pre><code>
-store(Var::<a href="#type-atomic_var">atomic_var()</a>, Value::integer()) -&gt; ok
+store(Var::<a href="#type-atomic_var">atomic_var()</a>, Value::term()) -&gt; ok
 </code></pre>
 
 <br></br>
@@ -377,7 +377,7 @@ store(Var::<a href="#type-atomic_var">atomic_var()</a>, Value::integer()) -&gt; 
 
 
 <pre><code>
-store(Var::<a href="#type-atomic_var">atomic_var()</a>, Value::integer(), MemoryOrder::<a href="#type-memory_order">memory_order()</a>) -&gt; ok
+store(Var::<a href="#type-atomic_var">atomic_var()</a>, Value::term(), MemoryOrder::<a href="#type-memory_order">memory_order()</a>) -&gt; ok
 </code></pre>
 
 <br></br>

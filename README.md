@@ -4,15 +4,15 @@
 
 Copyright (c) 2016 Guilherme Andrade
 
-__Version:__ 1.0.0
+__Version:__ 2.0.0
 
 __Authors:__ Guilherme Andrade ([`vegrandis(at)gandrade(dot)net`](mailto:vegrandis(at)gandrade(dot)net)).
 
-`vegrandis`: Native atomic shared variables for Erlang
+`vegrandis`: Atomic shared variables for Erlang
 
 ---------
 
-`vegrandis` provides native atomic variables and flags that can be shared between Erlang processes living in the same node.
+`vegrandis` provides atomic variables - for both native integral types and Erlang terms - and native flags that can be shared between Erlang processes living in the same node.
 
 It consists of a [NIF](http://erlang.org/doc/man/erl_nif.md) library wrapping around C++11's [std::atomic](http://en.cppreference.com/w/cpp/atomic/atomic); a majority of the standard integral data types can be used and most of the original operations can be performed, including optionally specifying [memory ordering](http://en.cppreference.com/w/cpp/atomic/memory_order) constraints and, if both hardware and compiler implementation allow it, operating in a [lockfree](http://en.cppreference.com/w/cpp/atomic/atomic_is_lock_free) fashion.
 
@@ -26,13 +26,24 @@ Original development rig runs OTP 17.5 over GNU/Linux x86_64, and quick test wit
 
 ```erlang
 
-{ok, AtomicCounter} = vegrandis_var:new(uint8),
+{ok, SharedTerm} = vegrandis:new(term),
+vegrandis:store(SharedTerm, math:pi()),
+spawn(fun () ->
+          io:format("stored value: ~p~n", [vegrandis:load(SharedTerm)])
+      end).
+% stored value: 3.141592653589793
+
+```
+
+```erlang
+
+{ok, AtomicCounter} = vegrandis:new(uint8),
 Increments = 10,
 Parent = self(),
 
 [spawn(
     fun () ->
-        Parent ! vegrandis_var:fetch_add(AtomicCounter, 1)
+        Parent ! vegrandis:fetch_add(AtomicCounter, 1)
     end)
  || _ <- lists:seq(1, Increments)],
 
@@ -40,7 +51,7 @@ Parent = self(),
 [receive Value -> Value end || _ <- lists:seq(1, Increments)],
 
 % 10
-vegrandis_var:load(AtomicCounter).
+vegrandis:load(AtomicCounter).
 
 ```
 
@@ -50,12 +61,12 @@ vegrandis_var:load(AtomicCounter).
 
 ```erlang
 
-{ok, AtomicCounter} = vegrandis_var:new(int_fast32),
-vegrandis_var:store(AtomicCounter, 123),
+{ok, AtomicCounter} = vegrandis:new(int_fast32),
+vegrandis:store(AtomicCounter, 123),
 [spawn(
     fun F() ->
-        Value = vegrandis_var:load(AtomicCounter, memory_order_relaxed),
-        case vegrandis_var:compare_exchange_weak(AtomicCounter,
+        Value = vegrandis:load(AtomicCounter, memory_order_relaxed),
+        case vegrandis:compare_exchange_weak(AtomicCounter,
                 Value, Value + 1, memory_order_release, memory_order_relaxed)
         of
             true ->
@@ -67,7 +78,7 @@ vegrandis_var:store(AtomicCounter, 123),
  || _ <- lists:seq(1, 100)],
 
 timer:sleep(1000),
-vegrandis_var:load(AtomicCounter). % 223
+vegrandis:load(AtomicCounter). % 223
 
 ```
 
@@ -99,8 +110,8 @@ vegrandis_var:load(AtomicCounter). % 223
 
 ```erlang
 
-{ok, AtomicCounter} = vegrandis_var:new(long),
-vegrandis_var:is_lock_free(AtomicCounter) orelse exit(this_wont_do).
+{ok, AtomicCounter} = vegrandis:new(long),
+vegrandis:is_lock_free(AtomicCounter) orelse exit(this_wont_do).
 
 ```
 
@@ -123,6 +134,7 @@ The NIF shared object will be dumped into the priv/ directory.
 ### <a name="Variable_types">Variable types</a> ###
 
 
+* term (any Erlang term)
 * int8
 * uint8
 * int16
@@ -187,6 +199,6 @@ The NIF shared object will be dumped into the priv/ directory.
 
 
 <table width="100%" border="0" summary="list of modules">
-<tr><td><a href="https://github.com/g-andrade/vegrandis/blob/master/doc/vegrandis_flag.md" class="module">vegrandis_flag</a></td></tr>
-<tr><td><a href="https://github.com/g-andrade/vegrandis/blob/master/doc/vegrandis_var.md" class="module">vegrandis_var</a></td></tr></table>
+<tr><td><a href="https://github.com/g-andrade/vegrandis/blob/master/doc/vegrandis.md" class="module">vegrandis</a></td></tr>
+<tr><td><a href="https://github.com/g-andrade/vegrandis/blob/master/doc/vegrandis_flag.md" class="module">vegrandis_flag</a></td></tr></table>
 
