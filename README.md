@@ -26,7 +26,7 @@ Original development rig runs OTP 17.5 over GNU/Linux x86_64, and quick test wit
 
 ```erlang
 
-SharedTerm = vegrandis:new(term),
+SharedTerm = vegrandis:new(),
 vegrandis:store(SharedTerm, math:pi()),
 spawn(fun () ->
           io:format("stored value: ~p~n", [vegrandis:load(SharedTerm)])

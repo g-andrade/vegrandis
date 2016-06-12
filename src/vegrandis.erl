@@ -1,6 +1,7 @@
 -module(vegrandis).
 -author('Guilherme Andrade <vegrandis(at)gandrade(dot)net>').
 
+-export([new/0]).                     -ignore_xref({new, 0}).
 -export([new/1]).                     -ignore_xref({new, 1}).
 -export([is_lock_free/1]).            -ignore_xref({is_lock_free, 1}).
 -export([store/2]).                   -ignore_xref({store, 2}).
@@ -35,6 +36,10 @@
 
 -type atomic_var() :: term().
 -export_type([atomic_var/0]).
+
+-spec new() -> atomic_var().
+new() ->
+    new(term).
 
 -spec new(Type :: var_type()) -> atomic_var().
 new(Type) ->
