@@ -40,7 +40,12 @@
 
 
 init() ->
-    ok = erlang:load_nif("./priv/vegrandis_nif", 0).
+    PrivPath = case code:priv_dir(vegrandis) of
+               {error, bad_name} -> "priv";
+               ExistingPrivPath -> ExistingPrivPath
+           end,
+    NifPath = filename:join(PrivPath, "vegrandis_nif"),
+    ok = erlang:load_nif(NifPath, 0).
 
 
 -spec atomic_flag_new() -> {ok, vegrandis_flag:atomic_flag()} | {error, out_of_memory}.
