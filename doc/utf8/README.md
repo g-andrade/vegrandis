@@ -34,6 +34,9 @@ spawn(fun () ->
 
 ```
 
+---------
+
+
 ```erlang
 
 AtomicCounter = vegrandis:new(uint8),
