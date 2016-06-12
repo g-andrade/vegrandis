@@ -34,7 +34,9 @@
 -include("vegrandis.hrl").
 -export_type([var_type/0, memory_order/0]).
 
--type atomic_var() :: term().
+-type wrapped_resource(Id) :: {Id, non_neg_integer(), term()}.
+
+-opaque atomic_var() :: wrapped_resource('vegrandis.atomic_var').
 -export_type([atomic_var/0]).
 
 -spec new() -> atomic_var().

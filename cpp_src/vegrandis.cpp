@@ -29,8 +29,8 @@
 #include <cstring>
 #include <atomic>
 
-#define ATOMIC_FLAG_RESOURCE "atomic_flag"
-#define ATOMIC_VAR_RESOURCE "atomic_var"
+#define ATOMIC_FLAG_RESOURCE "vegrandis.atomic_flag"
+#define ATOMIC_VAR_RESOURCE "vegrandis.atomic_var"
 
 ErlNifResourceType* atomic_flag_resource_type;
 ErlNifResourceType* atomic_var_resource_type;
@@ -41,6 +41,28 @@ static inline ERL_NIF_TERM wrap_success(ErlNifEnv* env, ERL_NIF_TERM term) {
 
 static inline ERL_NIF_TERM wrap_error(ErlNifEnv* env, ERL_NIF_TERM term) {
     return enif_make_tuple2(env, enif_make_atom(env, "error"), term);
+}
+
+static ERL_NIF_TERM wrap_resource_term(
+        ErlNifEnv* env, const char* resourceTypeId, ERL_NIF_TERM resourceTerm)
+{
+    return enif_make_tuple3(env,
+            enif_make_atom(env, resourceTypeId),
+            enif_make_uint64(env, static_cast<ErlNifUInt64>(resourceTerm)),
+            resourceTerm);
+}
+
+static bool unwrap_resource_term(
+        ErlNifEnv* env, ERL_NIF_TERM wrappedResource, ERL_NIF_TERM* resourceTerm)
+{
+    int tupleArity = 0;
+    const ERL_NIF_TERM *tuple = nullptr;
+    if (not enif_get_tuple(env, wrappedResource, &tupleArity, &tuple))
+        return false;
+    if (tupleArity != 3)
+        return false;
+    *resourceTerm = tuple[2];
+    return true;
 }
 
 static void delete_atomic_flag_resource(ErlNifEnv* /*env*/, void* resource) {
@@ -88,12 +110,15 @@ static ERL_NIF_TERM atomic_flag_new(ErlNifEnv* env, int /*argc*/, const ERL_NIF_
     memcpy(resource, &flag, sizeof(std::atomic_flag*));
     ERL_NIF_TERM term = enif_make_resource(env, resource);
     enif_release_resource(resource);
-    return term;
+    return wrap_resource_term(env, ATOMIC_FLAG_RESOURCE, term);
 }
 
 static ERL_NIF_TERM atomic_flag_clear(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]) {
+    ERL_NIF_TERM resourceTerm;
     void* resource = nullptr;
-    if (!enif_get_resource(env, argv[0], atomic_flag_resource_type, (void **) &resource))
+    if (!unwrap_resource_term(env, argv[0], &resourceTerm))
+        return enif_make_badarg(env);
+    if (!enif_get_resource(env, resourceTerm, atomic_flag_resource_type, (void **) &resource))
         return enif_make_badarg(env);
     std::atomic_flag* flag = *(static_cast<std::atomic_flag**>(resource));
     switch (argc) {
@@ -112,8 +137,11 @@ static ERL_NIF_TERM atomic_flag_clear(ErlNifEnv* env, int argc, const ERL_NIF_TE
 }
 
 static ERL_NIF_TERM atomic_flag_test_and_set(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]) {
+    ERL_NIF_TERM resourceTerm;
     void* resource = nullptr;
-    if (!enif_get_resource(env, argv[0], atomic_flag_resource_type, (void **) &resource))
+    if (!unwrap_resource_term(env, argv[0], &resourceTerm))
+        return enif_make_badarg(env);
+    if (!enif_get_resource(env, resourceTerm, atomic_flag_resource_type, (void **) &resource))
         return enif_make_badarg(env);
     std::atomic_flag* flag = *(static_cast<std::atomic_flag**>(resource));
     switch (argc) {
@@ -151,20 +179,26 @@ static ERL_NIF_TERM atomic_var_new(ErlNifEnv* env, int /*argc*/, const ERL_NIF_T
     memcpy(resource, &variable, sizeof(AtomicVariable*));
     ERL_NIF_TERM term = enif_make_resource(env, resource);
     enif_release_resource(resource);
-    return term;
+    return wrap_resource_term(env, ATOMIC_VAR_RESOURCE, term);
 }
 
 static ERL_NIF_TERM atomic_var_is_lock_free(ErlNifEnv* env, int /*argc*/, const ERL_NIF_TERM argv[]) {
+    ERL_NIF_TERM resourceTerm;
     void* resource = nullptr;
-    if (!enif_get_resource(env, argv[0], atomic_var_resource_type, (void **) &resource))
+    if (!unwrap_resource_term(env, argv[0], &resourceTerm))
+        return enif_make_badarg(env);
+    if (!enif_get_resource(env, resourceTerm, atomic_var_resource_type, (void **) &resource))
         return enif_make_badarg(env);
     AtomicVariable* variable = *(static_cast<AtomicVariable**>(resource));
     return variable->is_lock_free(env);
 }
 
 static ERL_NIF_TERM atomic_var_store(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]) {
+    ERL_NIF_TERM resourceTerm;
     void* resource = nullptr;
-    if (!enif_get_resource(env, argv[0], atomic_var_resource_type, (void **) &resource))
+    if (!unwrap_resource_term(env, argv[0], &resourceTerm))
+        return enif_make_badarg(env);
+    if (!enif_get_resource(env, resourceTerm, atomic_var_resource_type, (void **) &resource))
         return enif_make_badarg(env);
     AtomicVariable* variable = *(static_cast<AtomicVariable**>(resource));
     switch (argc) {
@@ -175,8 +209,11 @@ static ERL_NIF_TERM atomic_var_store(ErlNifEnv* env, int argc, const ERL_NIF_TER
 }
 
 static ERL_NIF_TERM atomic_var_load(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]) {
+    ERL_NIF_TERM resourceTerm;
     void* resource = nullptr;
-    if (!enif_get_resource(env, argv[0], atomic_var_resource_type, (void **) &resource))
+    if (!unwrap_resource_term(env, argv[0], &resourceTerm))
+        return enif_make_badarg(env);
+    if (!enif_get_resource(env, resourceTerm, atomic_var_resource_type, (void **) &resource))
         return enif_make_badarg(env);
     AtomicVariable* variable = *(static_cast<AtomicVariable**>(resource));
     switch (argc) {
@@ -187,8 +224,11 @@ static ERL_NIF_TERM atomic_var_load(ErlNifEnv* env, int argc, const ERL_NIF_TERM
 }
 
 static ERL_NIF_TERM atomic_var_exchange(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]) {
+    ERL_NIF_TERM resourceTerm;
     void* resource = nullptr;
-    if (!enif_get_resource(env, argv[0], atomic_var_resource_type, (void **) &resource))
+    if (!unwrap_resource_term(env, argv[0], &resourceTerm))
+        return enif_make_badarg(env);
+    if (!enif_get_resource(env, resourceTerm, atomic_var_resource_type, (void **) &resource))
         return enif_make_badarg(env);
     AtomicVariable* variable = *(static_cast<AtomicVariable**>(resource));
     switch (argc) {
@@ -199,8 +239,11 @@ static ERL_NIF_TERM atomic_var_exchange(ErlNifEnv* env, int argc, const ERL_NIF_
 }
 
 static ERL_NIF_TERM atomic_var_compare_exchange_weak(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]) {
+    ERL_NIF_TERM resourceTerm;
     void* resource = nullptr;
-    if (!enif_get_resource(env, argv[0], atomic_var_resource_type, (void **) &resource))
+    if (!unwrap_resource_term(env, argv[0], &resourceTerm))
+        return enif_make_badarg(env);
+    if (!enif_get_resource(env, resourceTerm, atomic_var_resource_type, (void **) &resource))
         return enif_make_badarg(env);
     AtomicVariable* variable = *(static_cast<AtomicVariable**>(resource));
     switch (argc) {
@@ -211,8 +254,11 @@ static ERL_NIF_TERM atomic_var_compare_exchange_weak(ErlNifEnv* env, int argc, c
 }
 
 static ERL_NIF_TERM atomic_var_compare_exchange_strong(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]) {
+    ERL_NIF_TERM resourceTerm;
     void* resource = nullptr;
-    if (!enif_get_resource(env, argv[0], atomic_var_resource_type, (void **) &resource))
+    if (!unwrap_resource_term(env, argv[0], &resourceTerm))
+        return enif_make_badarg(env);
+    if (!enif_get_resource(env, resourceTerm, atomic_var_resource_type, (void **) &resource))
         return enif_make_badarg(env);
     AtomicVariable* variable = *(static_cast<AtomicVariable**>(resource));
     switch (argc) {
@@ -223,8 +269,11 @@ static ERL_NIF_TERM atomic_var_compare_exchange_strong(ErlNifEnv* env, int argc,
 }
 
 static ERL_NIF_TERM atomic_var_fetch_add(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]) {
+    ERL_NIF_TERM resourceTerm;
     void* resource = nullptr;
-    if (!enif_get_resource(env, argv[0], atomic_var_resource_type, (void **) &resource))
+    if (!unwrap_resource_term(env, argv[0], &resourceTerm))
+        return enif_make_badarg(env);
+    if (!enif_get_resource(env, resourceTerm, atomic_var_resource_type, (void **) &resource))
         return enif_make_badarg(env);
     AtomicVariable* variable = *(static_cast<AtomicVariable**>(resource));
     switch (argc) {
@@ -235,8 +284,11 @@ static ERL_NIF_TERM atomic_var_fetch_add(ErlNifEnv* env, int argc, const ERL_NIF
 }
 
 static ERL_NIF_TERM atomic_var_fetch_sub(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]) {
+    ERL_NIF_TERM resourceTerm;
     void* resource = nullptr;
-    if (!enif_get_resource(env, argv[0], atomic_var_resource_type, (void **) &resource))
+    if (!unwrap_resource_term(env, argv[0], &resourceTerm))
+        return enif_make_badarg(env);
+    if (!enif_get_resource(env, resourceTerm, atomic_var_resource_type, (void **) &resource))
         return enif_make_badarg(env);
     AtomicVariable* variable = *(static_cast<AtomicVariable**>(resource));
     switch (argc) {
@@ -247,8 +299,11 @@ static ERL_NIF_TERM atomic_var_fetch_sub(ErlNifEnv* env, int argc, const ERL_NIF
 }
 
 static ERL_NIF_TERM atomic_var_fetch_and(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]) {
+    ERL_NIF_TERM resourceTerm;
     void* resource = nullptr;
-    if (!enif_get_resource(env, argv[0], atomic_var_resource_type, (void **) &resource))
+    if (!unwrap_resource_term(env, argv[0], &resourceTerm))
+        return enif_make_badarg(env);
+    if (!enif_get_resource(env, resourceTerm, atomic_var_resource_type, (void **) &resource))
         return enif_make_badarg(env);
     AtomicVariable* variable = *(static_cast<AtomicVariable**>(resource));
     switch (argc) {
@@ -259,8 +314,11 @@ static ERL_NIF_TERM atomic_var_fetch_and(ErlNifEnv* env, int argc, const ERL_NIF
 }
 
 static ERL_NIF_TERM atomic_var_fetch_or(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]) {
+    ERL_NIF_TERM resourceTerm;
     void* resource = nullptr;
-    if (!enif_get_resource(env, argv[0], atomic_var_resource_type, (void **) &resource))
+    if (!unwrap_resource_term(env, argv[0], &resourceTerm))
+        return enif_make_badarg(env);
+    if (!enif_get_resource(env, resourceTerm, atomic_var_resource_type, (void **) &resource))
         return enif_make_badarg(env);
     AtomicVariable* variable = *(static_cast<AtomicVariable**>(resource));
     switch (argc) {
@@ -271,8 +329,11 @@ static ERL_NIF_TERM atomic_var_fetch_or(ErlNifEnv* env, int argc, const ERL_NIF_
 }
 
 static ERL_NIF_TERM atomic_var_fetch_xor(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]) {
+    ERL_NIF_TERM resourceTerm;
     void* resource = nullptr;
-    if (!enif_get_resource(env, argv[0], atomic_var_resource_type, (void **) &resource))
+    if (!unwrap_resource_term(env, argv[0], &resourceTerm))
+        return enif_make_badarg(env);
+    if (!enif_get_resource(env, resourceTerm, atomic_var_resource_type, (void **) &resource))
         return enif_make_badarg(env);
     AtomicVariable* variable = *(static_cast<AtomicVariable**>(resource));
     switch (argc) {
@@ -283,40 +344,55 @@ static ERL_NIF_TERM atomic_var_fetch_xor(ErlNifEnv* env, int argc, const ERL_NIF
 }
 
 static ERL_NIF_TERM atomic_var_add_fetch(ErlNifEnv* env, int /*argc*/, const ERL_NIF_TERM argv[]) {
+    ERL_NIF_TERM resourceTerm;
     void* resource = nullptr;
-    if (!enif_get_resource(env, argv[0], atomic_var_resource_type, (void **) &resource))
+    if (!unwrap_resource_term(env, argv[0], &resourceTerm))
+        return enif_make_badarg(env);
+    if (!enif_get_resource(env, resourceTerm, atomic_var_resource_type, (void **) &resource))
         return enif_make_badarg(env);
     AtomicVariable* variable = *(static_cast<AtomicVariable**>(resource));
     return variable->add_fetch(env, argv[1]);
 }
 
 static ERL_NIF_TERM atomic_var_sub_fetch(ErlNifEnv* env, int /*argc*/, const ERL_NIF_TERM argv[]) {
+    ERL_NIF_TERM resourceTerm;
     void* resource = nullptr;
-    if (!enif_get_resource(env, argv[0], atomic_var_resource_type, (void **) &resource))
+    if (!unwrap_resource_term(env, argv[0], &resourceTerm))
+        return enif_make_badarg(env);
+    if (!enif_get_resource(env, resourceTerm, atomic_var_resource_type, (void **) &resource))
         return enif_make_badarg(env);
     AtomicVariable* variable = *(static_cast<AtomicVariable**>(resource));
     return variable->sub_fetch(env, argv[1]);
 }
 
 static ERL_NIF_TERM atomic_var_and_fetch(ErlNifEnv* env, int /*argc*/, const ERL_NIF_TERM argv[]) {
+    ERL_NIF_TERM resourceTerm;
     void* resource = nullptr;
-    if (!enif_get_resource(env, argv[0], atomic_var_resource_type, (void **) &resource))
+    if (!unwrap_resource_term(env, argv[0], &resourceTerm))
+        return enif_make_badarg(env);
+    if (!enif_get_resource(env, resourceTerm, atomic_var_resource_type, (void **) &resource))
         return enif_make_badarg(env);
     AtomicVariable* variable = *(static_cast<AtomicVariable**>(resource));
     return variable->and_fetch(env, argv[1]);
 }
 
 static ERL_NIF_TERM atomic_var_or_fetch(ErlNifEnv* env, int /*argc*/, const ERL_NIF_TERM argv[]) {
+    ERL_NIF_TERM resourceTerm;
     void* resource = nullptr;
-    if (!enif_get_resource(env, argv[0], atomic_var_resource_type, (void **) &resource))
+    if (!unwrap_resource_term(env, argv[0], &resourceTerm))
+        return enif_make_badarg(env);
+    if (!enif_get_resource(env, resourceTerm, atomic_var_resource_type, (void **) &resource))
         return enif_make_badarg(env);
     AtomicVariable* variable = *(static_cast<AtomicVariable**>(resource));
     return variable->or_fetch(env, argv[1]);
 }
 
 static ERL_NIF_TERM atomic_var_xor_fetch(ErlNifEnv* env, int /*argc*/, const ERL_NIF_TERM argv[]) {
+    ERL_NIF_TERM resourceTerm;
     void* resource = nullptr;
-    if (!enif_get_resource(env, argv[0], atomic_var_resource_type, (void **) &resource))
+    if (!unwrap_resource_term(env, argv[0], &resourceTerm))
+        return enif_make_badarg(env);
+    if (!enif_get_resource(env, resourceTerm, atomic_var_resource_type, (void **) &resource))
         return enif_make_badarg(env);
     AtomicVariable* variable = *(static_cast<AtomicVariable**>(resource));
     return variable->xor_fetch(env, argv[1]);
