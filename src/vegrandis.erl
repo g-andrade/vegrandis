@@ -36,7 +36,7 @@
 -type atomic_var() :: term().
 -export_type([atomic_var/0]).
 
--spec new(Type :: var_type()) -> {ok, atomic_var()} | {error, out_of_memory}.
+-spec new(Type :: var_type()) -> atomic_var().
 new(Type) ->
     vegrandis_nif:atomic_var_new(Type).
 

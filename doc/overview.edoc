@@ -16,7 +16,7 @@ Original development rig runs OTP 17.5 over GNU/Linux x86_64, and quick test wit
 
 == Examples ==
 <pre lang="erlang">
-{ok, SharedTerm} = vegrandis:new(term),
+SharedTerm = vegrandis:new(term),
 vegrandis:store(SharedTerm, math:pi()),
 spawn(fun () -&gt;
           io:format("stored value: ~p~n", [vegrandis:load(SharedTerm)])
@@ -25,7 +25,7 @@ spawn(fun () -&gt;
 </pre>
 
 <pre lang="erlang">
-{ok, AtomicCounter} = vegrandis:new(uint8),
+AtomicCounter = vegrandis:new(uint8),
 Increments = 10,
 Parent = self(),
 
@@ -43,7 +43,7 @@ vegrandis:load(AtomicCounter).
 </pre>
 <hr/>
 <pre lang="erlang">
-{ok, AtomicCounter} = vegrandis:new(int_fast32),
+AtomicCounter = vegrandis:new(int_fast32),
 vegrandis:store(AtomicCounter, 123),
 [spawn(
     fun F() -&gt;
@@ -64,7 +64,7 @@ vegrandis:load(AtomicCounter). % 223
 </pre>
 <hr/>
 <pre lang="erlang">
-{ok, AtomicFlag} = vegrandis_flag:new(),
+AtomicFlag = vegrandis_flag:new(),
 [spawn(
     fun F() -&gt;
         case vegrandis_flag:test_and_set(AtomicFlag) of
@@ -80,7 +80,7 @@ vegrandis:load(AtomicCounter). % 223
 </pre>
 <hr/>
 <pre lang="erlang">
-{ok, AtomicCounter} = vegrandis:new(long),
+AtomicCounter = vegrandis:new(long),
 vegrandis:is_lock_free(AtomicCounter) orelse exit(this_wont_do).
 </pre>
 

@@ -15,7 +15,7 @@
 -export_type([atomic_flag/0]).
 
 
--spec new() -> {ok, atomic_flag()} | {error, out_of_memory}.
+-spec new() -> atomic_flag().
 new() ->
     vegrandis_nif:atomic_flag_new().
 

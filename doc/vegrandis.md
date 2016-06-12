@@ -338,7 +338,7 @@ load(Var::<a href="#type-atomic_var">atomic_var()</a>, MemoryOrder::<a href="#ty
 
 
 <pre><code>
-new(Type::<a href="#type-var_type">var_type()</a>) -&gt; {ok, <a href="#type-atomic_var">atomic_var()</a>} | {error, out_of_memory}
+new(Type::<a href="#type-var_type">var_type()</a>) -&gt; <a href="#type-atomic_var">atomic_var()</a>
 </code></pre>
 
 <br></br>

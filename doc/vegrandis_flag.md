@@ -79,7 +79,7 @@ clear(Flag::<a href="#type-atomic_flag">atomic_flag()</a>, MemoryOrder::<a href=
 
 
 <pre><code>
-new() -&gt; {ok, <a href="#type-atomic_flag">atomic_flag()</a>} | {error, out_of_memory}
+new() -&gt; <a href="#type-atomic_flag">atomic_flag()</a>
 </code></pre>
 
 <br></br>

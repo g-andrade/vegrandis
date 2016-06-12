@@ -80,21 +80,15 @@ static int load(ErlNifEnv* env, void** /*priv*/, ERL_NIF_TERM /*load_info*/) {
 static ERL_NIF_TERM atomic_flag_new(ErlNifEnv* env, int /*argc*/, const ERL_NIF_TERM[] /*argv*/) {
     void* resource = enif_alloc_resource(atomic_flag_resource_type, sizeof(std::atomic_flag*));
     assert(resource != nullptr);
-    if (resource == nullptr) {
-        return wrap_error(env, enif_make_atom(env, "out_of_memory"));
-    }
 
     std::atomic_flag* flag = new std::atomic_flag();
-    if (flag == nullptr) {
-        enif_release_resource(resource);
-        return wrap_error(env, enif_make_atom(env, "out_of_memory"));
-    }
+    assert(flag != nullptr);
 
     flag->clear();
     memcpy(resource, &flag, sizeof(std::atomic_flag*));
     ERL_NIF_TERM term = enif_make_resource(env, resource);
     enif_release_resource(resource);
-    return wrap_success(env, term);
+    return term;
 }
 
 static ERL_NIF_TERM atomic_flag_clear(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]) {
@@ -152,15 +146,12 @@ static ERL_NIF_TERM atomic_var_new(ErlNifEnv* env, int /*argc*/, const ERL_NIF_T
     }
 
     void* resource = enif_alloc_resource(atomic_var_resource_type, sizeof(AtomicVariable*));
-    if (resource == nullptr) {
-        delete variable;
-        return wrap_error(env, enif_make_atom(env, "out_of_memory"));
-    }
+    assert(resource != nullptr);
 
     memcpy(resource, &variable, sizeof(AtomicVariable*));
     ERL_NIF_TERM term = enif_make_resource(env, resource);
     enif_release_resource(resource);
-    return wrap_success(env, term);
+    return term;
 }
 
 static ERL_NIF_TERM atomic_var_is_lock_free(ErlNifEnv* env, int /*argc*/, const ERL_NIF_TERM argv[]) {
