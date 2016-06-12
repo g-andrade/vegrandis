@@ -1,6 +1,6 @@
 @author Guilherme Andrade <vegrandis(at)gandrade(dot)net>
 @copyright 2016 Guilherme Andrade
-@version 3.0.0
+@version 3.0.1
 @title vegrandis
 @doc `vegrandis': Atomic shared variables for Erlang
 
@@ -23,7 +23,7 @@ spawn(fun () -&gt;
       end).
 % stored value: 3.141592653589793
 </pre>
-
+<hr/>
 <pre lang="erlang">
 AtomicCounter = vegrandis:new(uint8),
 Increments = 10,

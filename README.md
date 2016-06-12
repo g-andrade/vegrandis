@@ -4,7 +4,7 @@
 
 Copyright (c) 2016 Guilherme Andrade
 
-__Version:__ 3.0.0
+__Version:__ 3.0.1
 
 __Authors:__ Guilherme Andrade ([`vegrandis(at)gandrade(dot)net`](mailto:vegrandis(at)gandrade(dot)net)).
 
@@ -34,6 +34,10 @@ spawn(fun () ->
 % stored value: 3.141592653589793
 
 ```
+
+
+---------
+
 
 ```erlang
 
