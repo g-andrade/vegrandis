@@ -17,11 +17,7 @@
 ### <a name="type-atomic_flag">atomic_flag()</a> ###
 
 
-
-<pre><code>
-atomic_flag() = term()
-</code></pre>
-
+__abstract datatype__: `atomic_flag()`
 
 
 
