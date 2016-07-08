@@ -537,7 +537,7 @@ static inline bool extract_number(
         T
         >::type* out)
 {
-    return extract_number<int64_t, T>(env, term, enif_get_int64, out);
+    return extract_number<ErlNifSInt64, T>(env, term, enif_get_int64, out);
 }
 
 template<typename T>
@@ -549,7 +549,7 @@ static inline bool extract_number(
         T
         >::type* out)
 {
-    return extract_number<uint64_t, T>(env, term, enif_get_uint64, out);
+    return extract_number<ErlNifUInt64, T>(env, term, enif_get_uint64, out);
 }
 
 
