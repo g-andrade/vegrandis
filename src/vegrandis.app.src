@@ -14,5 +14,15 @@
 
   {maintainers, ["Guilherme Andrade"]},
   {licenses, ["MIT"]},
-  {links, [{"Github", "https://github.com/g-andrade/vegrandis"}]}
+  {links, [{"Github", "https://github.com/g-andrade/vegrandis"}]},
+  {files,
+   ["src/*.erl",
+    "src/*.src",
+    "include/*.hrl",
+    "cpp_src/*.{h,cpp}",
+    "cpp_src/Makefile",
+    "rebar.config",
+    "rebar.lock",
+    "priv/.empty"
+   ]}
  ]}.
