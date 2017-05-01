@@ -1,6 +1,6 @@
 @author Guilherme Andrade <vegrandis(at)gandrade(dot)net>
 @copyright 2016 Guilherme Andrade
-@version 3.1.0
+@version 3.1.1
 @title vegrandis
 @doc `vegrandis': Atomic shared variables for Erlang
 
