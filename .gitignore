@@ -53,3 +53,4 @@ rel/example_project
 *.swp
 test.app.config
 variables-ct*
+_build/

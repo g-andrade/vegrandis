@@ -5,8 +5,6 @@
 * [Function Index](#index)
 * [Function Details](#functions)
 
-
-
 <a name="types"></a>
 
 ## Data Types ##
@@ -25,11 +23,9 @@ __abstract datatype__: `atomic_flag()`
 ### <a name="type-memory_order">memory_order()</a> ###
 
 
-
 <pre><code>
-memory_order() = (memory_order_relaxed | memory_order_consume | memory_order_acquire | memory_order_release | memory_order_acq_rel | memory_order_seq_cst)
+memory_order() = memory_order_relaxed | memory_order_consume | memory_order_acquire | memory_order_release | memory_order_acq_rel | memory_order_seq_cst
 </code></pre>
-
 
 <a name="index"></a>
 
@@ -47,64 +43,44 @@ memory_order() = (memory_order_relaxed | memory_order_consume | memory_order_acq
 
 ### clear/1 ###
 
-
 <pre><code>
 clear(Flag::<a href="#type-atomic_flag">atomic_flag()</a>) -&gt; ok
 </code></pre>
-
-<br></br>
-
-
+<br />
 
 <a name="clear-2"></a>
 
 ### clear/2 ###
 
-
 <pre><code>
 clear(Flag::<a href="#type-atomic_flag">atomic_flag()</a>, MemoryOrder::<a href="#type-memory_order">memory_order()</a>) -&gt; ok
 </code></pre>
-
-<br></br>
-
-
+<br />
 
 <a name="new-0"></a>
 
 ### new/0 ###
 
-
 <pre><code>
 new() -&gt; <a href="#type-atomic_flag">atomic_flag()</a>
 </code></pre>
-
-<br></br>
-
-
+<br />
 
 <a name="test_and_set-1"></a>
 
 ### test_and_set/1 ###
 
-
 <pre><code>
 test_and_set(Flag::<a href="#type-atomic_flag">atomic_flag()</a>) -&gt; boolean()
 </code></pre>
-
-<br></br>
-
-
+<br />
 
 <a name="test_and_set-2"></a>
 
 ### test_and_set/2 ###
 
-
 <pre><code>
 test_and_set(Flag::<a href="#type-atomic_flag">atomic_flag()</a>, MemoryOrder::<a href="#type-memory_order">memory_order()</a>) -&gt; boolean()
 </code></pre>
-
-<br></br>
-
-
+<br />
 
