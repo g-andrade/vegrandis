@@ -1,16 +1,18 @@
 {application, vegrandis,
- [
-  {description, "Atomic shared variables for Erlang"},
+ [{description, "Atomic shared variables"},
   {vsn, git},
-  {modules, [
-             vegrandis_nif,
-             vegrandis_flag,
-             vegrandis
-            ]},
-  {registered, []},
-  {applications, [
-                  kernel,
-                  stdlib
-                 ]},
-  {env, []}
+  {registered, [vegrandis]},
+  {applications,
+   [kernel,
+    stdlib
+   ]},
+  {env,[]},
+  {modules,
+   [vegrandis_nif,
+    vegrandis_flag,
+    vegrandis]},
+
+  {maintainers, ["Guilherme Andrade"]},
+  {licenses, ["MIT"]},
+  {links, [{"Github", "https://github.com/g-andrade/vegrandis"}]}
  ]}.

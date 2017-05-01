@@ -4,11 +4,12 @@
 
 Copyright (c) 2016 Guilherme Andrade
 
-__Version:__ 3.0.1
+__Version:__ 3.1.0
 
 __Authors:__ Guilherme Andrade ([`vegrandis(at)gandrade(dot)net`](mailto:vegrandis(at)gandrade(dot)net)).
 
 `vegrandis`: Atomic shared variables for Erlang
+
 ---------
 
 `vegrandis` provides atomic variables - for both native integral types and Erlang terms - and native flags that can be shared between Erlang processes living in the same node.
@@ -115,23 +116,7 @@ vegrandis:is_lock_free(AtomicCounter) orelse exit(this_wont_do).
 ```
 
 
-### <a name="Building">Building</a> ###
-
-The ERTS headers are required; if they're not available on a global include path, 'ERL_INCLUDE' can be explicitly defined.
-
-```bash
-
-% Example path
-ERL_INCLUDE=/opt/kerl/17.5/usr/include rebar compile
-
-```
-
-
-The NIF shared object will be dumped into the priv/ directory.
-
-
 ### <a name="Variable_types">Variable types</a> ###
-
 
 * term (any Erlang term)
 * int8
@@ -177,7 +162,6 @@ The NIF shared object will be dumped into the priv/ directory.
 
 
 ### <a name="Memory_orderings">Memory orderings</a> ###
-
 
 * memory_order_relaxed
 * memory_order_consume
