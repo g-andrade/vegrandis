@@ -6,8 +6,8 @@ endif
 
 CXX=g++
 RM=rm -f
-INC=-I$(ERL_INCLUDE)
-CPPFLAGS=-std=c++11 -Wall -Wextra -Wpedantic -fPIC -O2 $(INC)
+INC=
+CPPFLAGS=-std=c++11 -Wall -Wextra -Wpedantic -fPIC -lei -O2 $(INC)
 LDLIBS=
 SHARED_OBJECT=../priv/vegrandis_nif.so
 
