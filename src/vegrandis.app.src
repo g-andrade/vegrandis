@@ -4,8 +4,7 @@
   {registered, [vegrandis]},
   {applications,
    [kernel,
-    stdlib,
-    crypto
+    stdlib
    ]},
   {env,[]},
   {modules,
